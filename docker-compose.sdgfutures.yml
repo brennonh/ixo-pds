@@ -4,11 +4,17 @@ services:
     environment:
       - MONGODB_URI=mongodb://${DB_USER}:${DB_PASSWORD}@db:27017/elysian
       - RABITMQ_URI=amqp://${MQ_USER}:${MQ_PASSWORD}@mq:5672?heartbeat=2
-      - BLOCKCHAIN_URI_REST=https://explorer.ixo.world/api/
+      - BLOCKCHAIN_URI_REST=https://explorer_sdgfutures.ixo.world/api/
       - ETHEREUM_API=https://mainnet.infura.io/
       - ASYM_CYPHER=${ASYMCYPHER}
       - ASYM_KEY=${ASYMKEY}
-      - NODEDID=
+  db:
+    ports:
+      - "27017:27017"
+
+  cache:
+    ports:
+      - "11211:11211"
 
   mq:
     ports:
@@ -20,12 +26,9 @@ services:
   pol:
     environment:
       - RABITMQ_URI=amqp://${MQ_USER}:${MQ_PASSWORD}@mq:5672?heartbeat=2
-      - BLOCKCHAIN_URI_SYNC=http://blockchain.ixo.world:46657/broadcast_tx_sync?tx=0x
-      - BLOCKCHAIN_URI_COMMIT=http://blockchain.ixo.world:46657/broadcast_tx_commit?tx=0x
-      - BLOCKCHAIN_URI_VALIDATE=http://blockchain.ixo.world:46657/tx?hash=0x
-      - ETHEREUM_API=https://mainnet.infura.io/
+      - BLOCKCHAIN_URI_TENDERMINT=http://blockchain_sdgfutures.ixo.world:46657/broadcast_tx_sync?tx=0x
 
   cli:
     environment:
       - MONGODB_URI=mongodb://${DB_USER}:${DB_PASSWORD}@db:27017/elysian
-      - BLOCKCHAIN_URI_REST=https://explorer.ixo.world/api/did/getByDid/
+      - BLOCKCHAIN_URI_REST=https://explorer_sdgfutures.ixo.world/api/did/getByDid/
